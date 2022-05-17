@@ -13,18 +13,18 @@ namespace OtusCSharpBasicFinalProject.OpenWebNet
 
         private static NetworkStream Stream { get; set; }
         
-        public static void StartWorking(string server, int port)
+        public static async Task StartWorkingAsync(string server, int port)
         {
-            OpenConnection(server,port);
+            await OpenConnectionAsync(server,port);
             //StayConnected(server,port);
         }
-        private static async void OpenConnection(string server, int port)
+        private static async Task OpenConnectionAsync(string server, int port)
         {
             try
             {
                 Client = new TcpClient();
                 await Client.ConnectAsync(server, port);
-                await StayConnected();
+                await StayConnectedAsync();
             }
             catch (SocketException e)
             {
@@ -39,7 +39,7 @@ namespace OtusCSharpBasicFinalProject.OpenWebNet
             Console.Read();
         }
 
-        private static async Task StayConnected()
+        private static async Task StayConnectedAsync()
         {
             StringBuilder response = new StringBuilder();
             Stream = Client.GetStream();
@@ -72,8 +72,9 @@ namespace OtusCSharpBasicFinalProject.OpenWebNet
                     var responseText = await GetResponse(response);
                     if (responseText.Contains("*1*1*37") || responseText.Contains("*1*0*37"))
                         Console.WriteLine(responseText);
-                    Thread.Sleep(2000);
-                    
+                    //Thread.Sleep(2000);
+                    await Task.Delay(2000);
+
                 } while (true);
             }
             // Закрываем потоки

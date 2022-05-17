@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using OtusCSharpBasicFinalProject.Telegram;
 
 namespace OtusCSharpBasicFinalProject
@@ -11,9 +10,9 @@ namespace OtusCSharpBasicFinalProject
         private const string ApiKeyPath = @"D:\OTUS\BotApiKey\BotApiKey.txt";
         private const string ApprovedUsersPath = @"D:\OTUS\BotApiKey\approvedUsersFile.txt";
 
-        static void Main(string[] args)
+        static void Main()
         {
-            OpenWebNet.OpenWebNet.StartWorking(Server,Port);
+            OpenWebNet.OpenWebNet.StartWorkingAsync(Server,Port);
             var telegramBot = new TelegramBotApi();
             telegramBot.ConnectBot(ApiKeyPath,ApprovedUsersPath);
             Console.ReadKey();
